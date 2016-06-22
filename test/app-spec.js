@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 // const request = require('supertest');
 
 describe('Gobble API', () => {
-  // Dummy Initial Assertion
+  // Dummy Initial
   it('should validate the equality of two strings', () => {
     expect('Of course this works!').to.equal('Of course this works!');
   });
