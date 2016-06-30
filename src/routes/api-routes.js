@@ -1,3 +1,5 @@
+const fetch = require('isomorphic-fetch');
+const { checkStatus, parseJSON } = require('./../lib/fetch-utils');
 const gobbleDB = process.env.GOBBLE_DB_URL;
 
 const routeAPI = (app) => {
@@ -6,13 +8,21 @@ const routeAPI = (app) => {
   });
 
   app.get('/user', (req, res) => {
-    console.log(gobbleDB);
-    res.status(200).json('GET user');
+    const facebookId = req.query.facebook_id;
+    fetch(`${gobbleDB}/db/user?facebook_id=${facebookId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(userData => {
+        console.log(userData);
+        res.status(200).send(userData);
+      })
+      .catch(err => {
+        console.error('GET /user failed:', err);
+      });
   });
 
   app.post('/user', (req, res) => {
-    console.log(req.body);
-    res.status(200).json('POST user to create a new user');
+    
   });
 };
 
