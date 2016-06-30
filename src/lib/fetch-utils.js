@@ -10,7 +10,13 @@ const checkStatus = res => {
 
 const parseJSON = res => res.json();
 
+const handleError = err => {
+  console.error(`ERROR - Request to ${err.res.url} failed:
+    ${err.res.status} ${err.res.statusText}`);
+};
+
 module.exports = {
   checkStatus,
-  parseJSON
+  parseJSON,
+  handleError
 };
