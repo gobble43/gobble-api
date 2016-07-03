@@ -8,6 +8,7 @@
     "no-else-return": 0,
     "no-console": 0,  // allow use of console (off by default in the node environment)
     "prefer-template": 0, // disable preference for ES6 template literals for string concatenation
-    "no-undef": 0 // allow undefined 'describe' function from mocha
+    "no-undef": 0, // allow undefined 'describe' function from mocha
+    "max-len": 0,
   }
 }
