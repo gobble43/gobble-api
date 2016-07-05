@@ -1,5 +1,7 @@
 const fetch = require('isomorphic-fetch');
 const gobbleDB = process.env.GOBBLE_DB_URL;
+const gobbleRippleUrl = process.env.GOBBLE_RIPPLE_URL;
+
 const { checkStatus, parseJSON, handleError } = require('./../lib/fetch-utils');
 const { removeQuotes } = require('../lib/post-utils');
 
@@ -36,6 +38,20 @@ const routePostAPI = app => {
   app.get('/post/parent', (req, res) => {
     const parentId = req.query.parentId;
     fetch(`${gobbleDB}/db/post/parent?parentId=${parentId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
+  app.get('/post/ripple', (req, res) => {
+    const user = req.query.userId;
+    fetch(`${gobbleRippleUrl}/api/post?userId=${user}`)
       .then(checkStatus)
       .then(parseJSON)
       .then(data => {
