@@ -28,6 +28,22 @@ const routeFollowAPI = (app) => {
       });
   });
 
+  app.get('/is_following', (req, res) => {
+    const followerId = req.query.follower_id;
+    const followedId = req.query.followed_id;
+    fetch(`${gobbleDB}/db/is_following?follower_id=${followerId}&followed_id=${followedId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(isFollowing => {
+        console.log(`User ${followerId} is following ${followedId}: ${isFollowing}`);
+        res.status(200).json(isFollowing);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
   app.get('/following', (req, res) => {
     const facebookId = req.query.facebook_id;
     fetch(`${gobbleDB}/db/following?facebook_id=${facebookId}`)
