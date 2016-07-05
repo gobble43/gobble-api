@@ -42,6 +42,21 @@ const routeFollowAPI = (app) => {
         res.sendStatus(err.res.status);
       });
   });
+
+  app.get('/followers', (req, res) => {
+    const facebookId = req.query.facebook_id;
+    fetch(`${gobbleDB}/db/followers?facebook_id=${facebookId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(followersData => {
+        console.log(followersData);
+        res.status(200).json(followersData);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
 };
 
 module.exports = routeFollowAPI;
