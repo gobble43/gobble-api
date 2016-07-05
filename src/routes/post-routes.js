@@ -46,6 +46,27 @@ const routePostAPI = app => {
         res.sendStatus(err.res.status);
       });
   });
+
+  app.post('/post/comment', (req, res) => {
+    const comment = req.body;
+    fetch(`${gobbleDB}/db/post/comment`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(comment)
+    }).then(checkStatus)
+      .then(parseJSON)
+      .then(commentData => {
+        console.log(commentData);
+        res.status(200);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
 };
 
 module.exports = routePostAPI;
