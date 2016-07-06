@@ -59,6 +59,21 @@ const routeFollowAPI = (app) => {
       });
   });
 
+  app.get('/following_ids', (req, res) => {
+    const facebookId = req.query.facebook_id;
+    fetch(`${gobbleDB}/db/following_ids?facebook_id=${facebookId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(followingIdsData => {
+        console.log(followingIdsData);
+        res.status(200).json(followingIdsData);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
   app.get('/followers', (req, res) => {
     const facebookId = req.query.facebook_id;
     fetch(`${gobbleDB}/db/followers?facebook_id=${facebookId}`)
@@ -67,6 +82,21 @@ const routeFollowAPI = (app) => {
       .then(followersData => {
         console.log(followersData);
         res.status(200).json(followersData);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
+  app.get('/follower_ids', (req, res) => {
+    const facebookId = req.query.facebook_id;
+    fetch(`${gobbleDB}/db/follower_ids?facebook_id=${facebookId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(followerIdsData => {
+        console.log(followerIdsData);
+        res.status(200).json(followerIdsData);
       })
       .catch(err => {
         handleError(err);
