@@ -70,6 +70,26 @@ const routeUserAPI = (app) => {
       res.sendStatus(err.res.status);
     });
   });
+
+  app.post('/wish', (req, res) => {
+    fetch(`${gobbleDB}/db/wish`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
+    })
+    .then(checkStatus)
+    .then((dbResponse) => {
+      console.log(dbResponse);
+      res.end();
+    })
+    .catch((err) => {
+      handleError(err);
+      res.sendStatus(err.res.status);
+    });
+  });
 };
 
 module.exports = routeUserAPI;
