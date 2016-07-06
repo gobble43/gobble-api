@@ -28,6 +28,28 @@ const routeFollowAPI = (app) => {
       });
   });
 
+  app.delete('/follow', (req, res) => {
+    const deletedFollow = {
+      follower: req.body.follower,
+      followed: req.body.followed,
+    };
+
+    fetch(`${gobbleDB}/db/follow`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(deletedFollow)
+    }).then(checkStatus)
+      .then(dbResponse => {
+        res.sendStatus(dbResponse.status);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
   app.get('/is_following', (req, res) => {
     const followerId = req.query.follower_id;
     const followedId = req.query.followed_id;
