@@ -16,6 +16,7 @@ require('./config/initialize')(app);
 require('./routes/user-routes')(app);
 require('./routes/post-routes')(app);
 require('./routes/follow-routes')(app);
+require('./routes/product-routes')(app);
 
 app.listen(process.env.PORT, () => {
   console.log(`${process.env.APP_NAME} is listening on port ${process.env.PORT}.`);
