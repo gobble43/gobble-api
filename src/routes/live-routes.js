@@ -3,13 +3,26 @@ const { checkStatus, parseJSON, handleError } = require('./../lib/fetch-utils');
 const gobbleDB = process.env.GOBBLE_DB_URL;
 
 const routeLiveAPI = (app) => {
-  app.get('/search', (req, res) => {
-    const query = req.query.q;
-    fetch(`${gobbleDB}/db/search?q=${query}`)
+  app.get('/live_all', (req, res) => {
+    fetch(`${gobbleDB}/db/live_all`)
       .then(checkStatus)
       .then(parseJSON)
-      .then(searchResultsData => {
-        res.status(200).json(searchResultsData);
+      .then(activeLivesData => {
+        res.status(200).json(activeLivesData);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
+  app.get('/live_list', (req, res) => {
+    const facebookId = req.query.facebook_id;
+    fetch(`${gobbleDB}/db/live_list?facebook_id=${facebookId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(liveListData => {
+        res.status(200).json(liveListData);
       })
       .catch(err => {
         handleError(err);
