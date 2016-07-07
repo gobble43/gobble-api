@@ -7,7 +7,7 @@ const routeMediaAPI = (app) => {
   //   res.status(200).json({ message: 'Welcome to the Gobble API.' });
   // });
 
-  app.get('/user', (req, res) => {
+  app.get('/media', (req, res) => {
     const postId = req.query.post_id;
     fetch(`${gobbleDB}/db/media?post_id=${postId}`)
       .then(checkStatus)
