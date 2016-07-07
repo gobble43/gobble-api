@@ -70,9 +70,30 @@ const routeLiveAPI = (app) => {
       },
       body: JSON.stringify(postedLive)
     }).then(checkStatus)
-      .then(status => {
-        console.log(status);
-        res.sendStatus(200);
+      .then(dbResponse => {
+        res.sendStatus(dbResponse.status);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
+
+  app.post('/live_end', (req, res) => {
+    const postedLive = {
+      facebook_id: req.body.facebook_id,
+      peer_id: req.body.peer_id,
+    };
+
+    fetch(`${gobbleDB}/db/live_end`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postedLive)
+    }).then(checkStatus)
+      .then(dbResponse => {
+        res.sendStatus(dbResponse.status);
       })
       .catch(err => {
         handleError(err);
