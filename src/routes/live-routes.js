@@ -56,6 +56,29 @@ const routeLiveAPI = (app) => {
         res.sendStatus(err.res.status);
       });
   });
+
+  app.post('/live_view', (req, res) => {
+    const postedLive = {
+      facebook_id: req.body.facebook_id,
+      peer_id: req.body.peer_id,
+    };
+
+    fetch(`${gobbleDB}/db/live_view`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postedLive)
+    }).then(checkStatus)
+      .then(status => {
+        console.log(status);
+        res.sendStatus(200);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
 };
 
 module.exports = routeLiveAPI;
