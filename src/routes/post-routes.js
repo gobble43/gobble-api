@@ -83,6 +83,20 @@ const routePostAPI = app => {
         res.sendStatus(err.res.status);
       });
   });
+
+  app.get('/post/profile', (req, res) => {
+    const userId = req.query.facebookId;
+    fetch(`${gobbleDB}/db/post/profile?facebookId=${userId}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(posts => {
+        res.send(posts);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
 };
 
 module.exports = routePostAPI;
