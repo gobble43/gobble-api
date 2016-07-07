@@ -35,7 +35,8 @@ const routeLiveAPI = (app) => {
       facebook_id: req.body.facebook_id,
       active: req.body.active,
       peer_id: req.body.peer_id,
-      views: req.body.views
+      views: req.body.views,
+      description: req.body.description,
     };
 
     fetch(`${gobbleDB}/db/live`, {
