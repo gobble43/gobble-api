@@ -29,6 +29,33 @@ const routeLiveAPI = (app) => {
         res.sendStatus(err.res.status);
       });
   });
+
+  app.post('/live', (req, res) => {
+    const newLive = {
+      facebook_id: req.body.facebook_id,
+      active: req.body.active,
+      peer_id: req.body.peer_id,
+      views: req.body.views
+    };
+
+    fetch(`${gobbleDB}/db/live`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newLive)
+    }).then(checkStatus)
+      .then(parseJSON)
+      .then(liveData => {
+        console.log(liveData);
+        res.status(200).send(liveData);
+      })
+      .catch(err => {
+        handleError(err);
+        res.sendStatus(err.res.status);
+      });
+  });
 };
 
 module.exports = routeLiveAPI;
